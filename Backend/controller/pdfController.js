@@ -4,6 +4,7 @@ const fs = require("fs");
 const User = require("../model/userModel");
 const { v4: uuidv4 } = require("uuid");
 const PDF = require("../model/pdfModel");
+const { default: mongoose } = require("mongoose");
 
 const handlePdfUpload = async (req, res) => {
   try {
@@ -46,19 +47,27 @@ const handleExtractPdf = async (req, res) => {
     const pdfDoc = await PDFDocument.load(pdf.data);
     const newPdfDoc = await PDFDocument.create();
 
-    const sortedPages = pages.sort((a, b) => a - b);
-    for (let  i = 0 ;i< sortedPages.length ;i++) {
-      const [existingPdfPage] = await newPdfDoc.copyPages(pdfDoc , [sortedPages[i]-1]);
+    // const sortedPages = pages.sort((a, b) => a - b);
+    for (let  i = 0 ;i< pages.length ;i++) {
+      const [existingPdfPage] = await newPdfDoc.copyPages(pdfDoc , [pages[i]-1]);
       newPdfDoc.addPage(existingPdfPage);
     }
-    
-    
+     
     const newPdfBytes = await newPdfDoc.save();
+    const newPdfBuffer =  Buffer.from(newPdfBytes);
+    const extractedPdf = new PDF({
+      filename: `${pdf.filename}-extracted.pdf`,
+      data: newPdfBuffer,
+      owner: pdf.owner,
+    });
+    await extractedPdf.save();
+
     const extractedPdfFilePath = path.join('uploads', `${pdf._id}-extracted.pdf`);
-    fs.writeFileSync(extractedPdfFilePath, Buffer.from(newPdfBytes));
+    fs.writeFileSync(extractedPdfFilePath,newPdfBuffer);
+
     res.set("Content-Type", "application/pdf");
     res.set("Content-Disposition", 'attachment; filename="extracted.pdf"');
-    res.send(new Buffer.from(newPdfBytes));
+    res.send(newPdfBuffer); 
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -81,18 +90,18 @@ const getAllPdfs = async (req, res) => {
   }
 };
 
-const getPdfById = async (req, res) => {
-  try {
-    const pdf = await PDF.findById(req.params.id);
-    if (!pdf || pdf.owner.toString() !== req.user._id.toString()) {
-      return res.status(404).json("you don't have such pdf");
-    }
+  const getPdfById = async (req, res) => {
+    try {
+      
+      const pdf = await PDF.findById(req.params.id);
+      if (!pdf || pdf.owner.toString() !== req.user._id.toString()) {
+        return res.status(404).json("you don't have such pdf");
+      }
+      res.set("Content-Type", "application/pdf");
 
-    res.set("Content-Type", "application/pdf");
-    console.log(pdf.data)
-    res.send(pdf.data);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-};
+      res.status(201).send(pdf.data);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  };
 module.exports = { handlePdfUpload, handleExtractPdf, getAllPdfs ,getPdfById };

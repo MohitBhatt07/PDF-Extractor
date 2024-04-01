@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Login from "./components/Login";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Signup from "./components/Signup";
+import Home from "./components/Home";
+import PdfUpload from "./components/PdfUpload";
+import UserProvider from "./context/Context";
+import PdfViewer from "./components/PdfViewer";
+// import { pdfjs } from 'react-pdf';
+
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <Router>
+        <UserProvider>
+          <Routes>
+            <Route exact path="/" element={<PdfUpload />}></Route>
+            <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="/login" index element={<Login />} />
+            <Route  path = "/pdf/:id" element = {<PdfViewer />} />
+          </Routes>
+        </UserProvider>
+      </Router>
+    </div>
+  );
 }
 
-export default App
+export default App;
+{
+  /* <Route path="/" element={<PdfUpload />} />
+          <Route path="/extract" element={<PdfExtractor />} />
+          <Route path="/download" element={<DownloadPdf />} /> */
+}
+{
+  /* <Route path="/signup" element={<Signup />} /> */
+}
