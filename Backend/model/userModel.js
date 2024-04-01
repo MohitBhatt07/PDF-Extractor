@@ -10,8 +10,7 @@ const userSchema = mongoose.Schema({
   password: {
     type : String,
     required : true,
-  },
-  
+  }
 
 },{
   timestamps : true,
@@ -36,6 +35,6 @@ userSchema.methods.comparePassword = async function (password) {
   return result;
 };
 
-const User = mongoose.model("USER", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
