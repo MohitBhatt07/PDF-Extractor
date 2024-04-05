@@ -2,7 +2,7 @@ const { PDFDocument } = require("pdf-lib");
 const path = require("path");
 const fs = require("fs");
 const User = require("../model/userModel");
-const { v4: uuidv4 } = require("uuid");
+
 const PDF = require("../model/pdfModel");
 
 const handlePdfUpload = async (req, res) => {

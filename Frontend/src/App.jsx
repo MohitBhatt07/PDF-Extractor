@@ -8,7 +8,7 @@ import PdfViewer from "./components/PdfViewer";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
-import { PrivateLayout } from "./Layout/Layouts";
+import { PrivateLayout, PublicLayout } from "./Layout/Layouts";
 
 function App() {
   return (
@@ -16,9 +16,11 @@ function App() {
       <Router>
         <UserProvider>
           <Routes>
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/login" index element={<Login />} />
-            <Route element={ <PrivateLayout/>}>
+            <Route element={<PublicLayout />}>
+              <Route exact path="/signup" element={<Signup />} />
+              <Route exact path="/login" index element={<Login />} />
+            </Route>
+            <Route element={<PrivateLayout />}>
               <Route path="/" element={<LandingPage />} />
               <Route exact path="/dashboard" element={<Dashboard />} />
               <Route exact path="/upload" element={<PdfUpload />} />
