@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser } from "../api/auth";
+import { UserState } from "../context/Context";
 
 const defaultData = {
   username : "",
@@ -9,6 +10,7 @@ const defaultData = {
 }
 const Login = () => {
   const [formData , setFormData] = useState(defaultData);
+  const {setUser} = UserState();
   const [isLoading,  setIsLoading] = useState(false);
   const pageRoute = useNavigate();
   const handleOnChange = (e) => {
@@ -23,10 +25,11 @@ const Login = () => {
       const {data}  = await loginUser(formData);
       
       if (data.token) {
-        localStorage.setItem("userToken", data.token);
+        localStorage.setItem("user",JSON.stringify( data));
         toast.success("Succesfully Login!");
+        setUser(data);
         setIsLoading(false);
-        pageRoute("/");
+        pageRoute("/dashboard");
       } else {
         setIsLoading(false);
         toast.error("Invalid Credentials!");

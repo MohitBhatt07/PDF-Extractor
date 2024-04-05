@@ -1,27 +1,28 @@
 import {createContext,useEffect, useContext ,useState} from "react";
 import { useNavigate } from "react-router-dom";
 
-const userContext = createContext();
+const UserContext = createContext();
 
 const UserProvider = ({children}) =>{
-  const [userToken , setUserToken] = useState(null);
+  const [user, setUser] = useState({});
+  const [isLoggedIn , setIsLoggedIn ] = useState(null);
   const navigate = useNavigate();
-  useEffect(()=>{
-    const userInfo = localStorage.getItem("userToken");
-    setUserToken(userInfo);
 
-    if(!userInfo){
-      navigate('/login');
-    }
+  useEffect(()=>{
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    // if(!userInfo){
+    //   navigate('/login');
+    // }
+    setUser(userInfo);
   },[navigate]);
   
-  return <userContext.Provider value={{userToken ,setUserToken}}>
+  return <UserContext.Provider value={{user,setUser , isLoggedIn , setIsLoggedIn}}>
     {children}
-  </userContext.Provider>
+  </UserContext.Provider>
 }
 
-export const userState = ()=>{
-  return useContext(userContext);
+export const UserState = ()=>{
+  return useContext(UserContext);
 }
 
 
