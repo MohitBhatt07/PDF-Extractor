@@ -5,25 +5,28 @@ const pdfRouter = require('./routes/pdfRouter');
 const PORT = 8000;
 const cors = require('cors');
 const app = express();
-const allowedOrigin = process.env.BASE_URL;
+const dotenv = require('dotenv');
 
-app.use(cors({
-  origin: 'http://localhost:5173', 
-  optionsSuccessStatus: 200,
-}));
+dotenv.config();
+const allowedOrigin = process.env.BASE_URL;
+console.log(allowedOrigin);
 // app.use(cors({
-//   origin : (origin ,callback)=>{
-//     if(allowedOrigin.includes(origin)){
-//       console.log(origin ,allowedOrigin);
-//       callback(null,true);
-//     }
-//     else{
-//       callback(new Error("Not allowed by CORS"))
-//     }
-//   },
-//   credentials : true,
-//   methods : ["GET", "POST", "PUT", "DELETE"],
+//   origin: allowedOrigin, 
+//   optionsSuccessStatus: 200,
 // }));
+app.use(cors({
+  origin : (origin ,callback)=>{
+    if(allowedOrigin.includes(origin)){
+      console.log(origin ,allowedOrigin);
+      callback(null,true);
+    }
+    else{
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials : true,
+  methods : ["GET", "POST", "PUT", "DELETE"],
+}));
 connectDB();
 app.use(express.json({ strict: false }));
 app.use(express.urlencoded({ extended: false })); 
