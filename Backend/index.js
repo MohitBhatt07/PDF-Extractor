@@ -10,8 +10,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 const allowedOrigin = process.env.BASE_URL;
 console.log(allowedOrigin);
+
 // app.use(cors({
-//   origin: allowedOrigin, 
+//   origin: process.env.BASE_URL, 
 //   optionsSuccessStatus: 200,
 // }));
 app.use(cors({

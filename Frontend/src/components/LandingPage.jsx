@@ -1,3 +1,6 @@
+import ExtractPic from '../assets/extractPdf.png';
+import PdfsPic from '../assets/pdfsPic.png';
+import UploadPic from '../assets/uploadPic.png';
 
 import {Link }from "react-router-dom"
 
@@ -33,12 +36,12 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center shadow-blue-400 shadow-md rounded-md">
               <img
                 alt="Image"
                 className="aspect-video overflow-hidden rounded-xl object-cover object-center"
                 height="310"
-                src="/placeholder.svg"
+                src={ExtractPic}
                 width="550"
               />
             </div>
@@ -48,12 +51,12 @@ export default function LandingPage() {
       <section className="w-full py-12 md:py-16 xl:py-20 transition-colors">
         <div className="container px-4 md:px-6">
           <div className="grid items-start gap-4 md:grid-cols-2 md:gap-8 lg:gap-12">
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center shadow-blue-400 shadow-md rounded-md">
               <img
                 alt="Image"
                 className="aspect-video overflow-hidden rounded-xl object-cover object-center"
                 height="310"
-                src="/placeholder.svg"
+                src={PdfsPic}
                 width="550"
               />
             </div>
@@ -83,12 +86,12 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center shadow-blue-400 shadow-md rounded-md">
               <img
                 alt="Image"
                 className="aspect-video overflow-hidden rounded-xl object-cover object-center"
                 height="310"
-                src="/placeholder.svg"
+                src={UploadPic}
                 width="550"
               />
             </div>
