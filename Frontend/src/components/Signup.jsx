@@ -17,7 +17,7 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
     if (formData.password.length < 6) {
       toast.error("Password should be greater than 5 digit");
       setFormData({...formData, password : ""});

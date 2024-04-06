@@ -15,32 +15,32 @@ console.log(allowedOrigin);
 //   origin: process.env.BASE_URL,
 //   optionsSuccessStatus: 200,
 // }));
-app.use(cors());
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", allowedOrigin);
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, HEAD, OPTIONS, POST, PUT, DELETE"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
-// app.use(cors({
-//   origin : (origin ,callback)=>{
-//     if(allowedOrigin.includes(origin)){
-//       console.log(origin ,allowedOrigin);
-//       callback(null,true);
-//     }
-//     else{
-//       callback(new Error("Not allowed by CORS"))
-//     }
-//   },
-//   credentials : true,
-//   methods : ["GET", "POST", "PUT", "DELETE"],
-// }));
+// app.use(cors());
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", allowedOrigin);
+//   res.header(
+//     "Access-Control-Allow-Methods",
+//     "GET, HEAD, OPTIONS, POST, PUT, DELETE"
+//   );
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
+app.use(cors({
+  origin : (origin ,callback)=>{
+    if(allowedOrigin.includes(origin)){
+      console.log(origin ,allowedOrigin);
+      callback(null,true);
+    }
+    else{
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials : true,
+  methods : ["GET", "POST", "PUT", "DELETE"],
+}));
 connectDB();
 app.use(express.json({ strict: false }));
 app.use(express.urlencoded({ extended: false }));

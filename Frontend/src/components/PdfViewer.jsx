@@ -72,7 +72,7 @@ function PDFViewer() {
       formdata.append("id", pdfId);
       formdata.append("filename", pdfName);
       formdata.append("pages", pages.join(","));
-      console.log(id, pages);
+      
  
       const pdfResponse = await axios.post(`${url}/api/extract`, formdata, {
         headers: {
@@ -86,7 +86,7 @@ function PDFViewer() {
       });
 
       const pdfUrl = URL.createObjectURL(pdfBlob);
-      console.log(pdfUrl);  
+  
       const link = document.createElement("a");
       link.href = pdfUrl;
       link.download = "extract.pdf";

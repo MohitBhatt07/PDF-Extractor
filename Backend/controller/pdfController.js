@@ -97,7 +97,7 @@ const getAllPdfs = async (req, res) => {
     const userId = req.user._id;
     const uploadedPDFs = await PDF.find({ owner: userId }).select('_id filename owner');
     if (!uploadedPDFs.length) {
-      return res.status(200).json({ message: "You have no uploaded PDFs" });
+      return res.status(409).json({ message: "You have no uploaded PDFs" });
     }
 
     res.status(200).json({ message: "Your PDFs", pdfs: uploadedPDFs });

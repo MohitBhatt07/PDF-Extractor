@@ -33,7 +33,7 @@ const PdfUpload = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("filename" , filename);
-    console.log(formData.values);
+    
     try {
       const response = await axios.post(`${url}/api/upload`, formData, {
         headers: {
