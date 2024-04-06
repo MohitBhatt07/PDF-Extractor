@@ -5,7 +5,7 @@ import UploadPic from '../assets/uploadPic.png';
 import {Link }from "react-router-dom"
 
 export default function LandingPage() {
-  const {user} = UserState();
+  
   return (
     <>
       <div className="bg-gray-50/90 border-t border-b border-gray-200 dark:bg-gray-950 dark:border-gray-800 dark:border-gray-800 transition-colors">
