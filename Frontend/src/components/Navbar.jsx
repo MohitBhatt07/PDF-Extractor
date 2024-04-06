@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../assets/docuflow.png";
 import { useNavigate } from "react-router-dom";
 import { UserState } from "../context/Context";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  let { user } = UserState();
-  if (Object.keys(user).length === 0) {
-    user = null;
-  }
+  
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+
+
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -38,7 +38,7 @@ const Navbar = () => {
         </a>
 
         <div className="relative ">
-          {user === null ? (
+          {(Object.keys(user).length === 0) ? (
             <button
               className="text-white mx-4 bg-gray-400 rounded-md p-2"
               onClick={() => navigate("/login")}
